@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>RASG-2 তদারকি ও মূল্যায়ন</title>
+<meta name="theme-color" content="#16202a">
+<style>
+  html,body{margin:0;height:100%;background:#f3f5f7;font-family:'Noto Sans Bengali',system-ui,sans-serif}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0}
+  #fb{position:fixed;inset:auto 0 0 0;padding:10px;text-align:center;font-size:13px;color:#5b6875;display:none}
+  #fb a{color:#1b5e7a}
+</style>
+</head>
+<body>
+<iframe id="app" title="RASG-2 তদারকি ও মূল্যায়ন" allow="clipboard-write"></iframe>
+<div id="fb">অ্যাপ লোড না হলে <a id="direct" target="_top">এখানে সরাসরি খুলুন</a></div>
+<script>
+  // লাইভ অ্যাপ Google Apps Script-এ চলে; এই পাতা শুধু সেটিকে পুরো পর্দায় দেখায়।
+  // ছাত্রীদের রুম লিংক: ?room=305 এর মতো প্যারামিটার সরাসরি অ্যাপে পাঠানো হয়।
+  var APP = 'https://script.google.com/macros/s/AKfycbxMl689W6YV452PFY5eNqNDFSmvD4OXnfGcT_MtCFiAMirO2vm9wbZAHnq7KYRbGUXX/exec';
+  var url = APP + location.search;
+  document.getElementById('app').src = url;
+  document.getElementById('direct').href = url;
+  setTimeout(function () { document.getElementById('fb').style.display = 'block'; }, 8000);
+</script>
+</body>
+</html>
