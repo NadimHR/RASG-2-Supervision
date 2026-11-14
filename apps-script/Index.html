@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16202a;--mute:#5b6875;--line:#d5dbe1;--bg:#f3f5f7;--card:#fff;--brand:#0f4c5c;--brand2:#e8f1f3;--pos:#1b7f4b;--avg:#a96a00;--neg:#b3261e;--posbg:#e4f4ea;--avgbg:#fbf0d9;--negbg:#fbe4e2}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans Bengali',system-ui,sans-serif;font-size:16px;line-height:1.45}
+button,select,input,textarea{font:inherit;color:inherit}
+.app{max-width:760px;margin:0 auto;padding:0 12px 92px}
+header.top{position:sticky;top:0;z-index:5;background:var(--brand);color:#fff;margin:0 -12px 12px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+header.top h1{font-size:17px;margin:0;font-weight:700}
+header.top small{display:block;font-weight:400;opacity:.85;font-size:12px}
+header.top button{background:transparent;border:1px solid rgba(255,255,255,.6);color:#fff;border-radius:8px;padding:6px 10px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.card h2{font-size:17px;margin:0 0 8px}
+.card h3{font-size:15px;margin:12px 0 6px}
+label.f{display:block;font-weight:600;font-size:14px;margin:10px 0 4px}
+select,input[type=text],input[type=date],input[type=password],textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;min-height:46px}
+textarea{min-height:84px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:block;width:100%;border:0;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;padding:14px;margin-top:14px;font-size:16px}
+.btn.ghost{background:#fff;color:var(--brand);border:1.5px solid var(--brand)}
+.btn:disabled{opacity:.5}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-size:14px}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.crit{border-top:1px solid var(--line);padding:10px 0}
+.crit:first-of-type{border-top:0}
+.crit .t{font-weight:600;font-size:15px;margin-bottom:6px}
+.likert{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.likert button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 0 6px;font-weight:700;font-size:17px;line-height:1.1}
+.likert button small{display:block;font-size:10px;font-weight:400;color:var(--mute)}
+.likert button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.likert button.on small{color:#fff}
+.slot{display:grid;grid-template-columns:104px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);align-items:start}
+.slot:first-child{border-top:0}
+.slot .tm{font-weight:700;font-size:14px}
+.slot .tm small{display:block;font-weight:400;color:var(--mute)}
+.slot.work.r2 .lb{font-weight:700;color:var(--brand)}
+.slot.move .lb,.slot.break .lb{color:var(--mute)}
+.inner{background:var(--brand2);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px}
+.inner div{padding:3px 0}
+.inner b{display:inline-block;min-width:98px}
+.tag{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700}
+.POSITIVE{background:var(--posbg);color:var(--pos)}.AVERAGE{background:var(--avgbg);color:var(--avg)}.NEGATIVE{background:var(--negbg);color:var(--neg)}
+.list .it{border-top:1px solid var(--line);padding:10px 0}
+.list .it:first-child{border-top:0}
+.muted{color:var(--mute);font-size:13px}
+.room{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:#fff;width:100%;text-align:left}
+.room b{font-size:18px}
+.room.done{background:#f1f3f5}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kpi{border-radius:12px;padding:10px 6px;text-align:center;background:#fff;border:1px solid var(--line)}
+.kpi b{display:block;font-size:22px}
+.kpi span{font-size:12px;color:var(--mute)}
+.bar{display:grid;grid-template-columns:minmax(92px,34%) 1fr 44px;gap:8px;align-items:center;font-size:13px;padding:4px 0}
+.bar .tr{height:14px;border-radius:7px;background:#e6eaee;overflow:hidden;display:flex}
+.bar .tr i{display:block;height:100%}
+.bar .tr .p{background:var(--pos)}.bar .tr .a{background:#d9a441}.bar .tr .n{background:var(--neg)}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;vertical-align:top}
+table.t th{color:var(--mute);font-weight:600}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:6;padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{border:0;background:transparent;padding:9px 2px 8px;font-size:12px;color:var(--mute);font-weight:600}
+nav.tabs button b{display:block;font-size:19px;line-height:1.2}
+nav.tabs button.on{color:var(--brand);box-shadow:inset 0 3px 0 var(--brand)}
+#toast{position:fixed;left:12px;right:12px;bottom:84px;background:#16202a;color:#fff;border-radius:12px;padding:12px 14px;display:none;z-index:9;font-size:15px}
+#toast.err{background:var(--neg)}
+.hide{display:none!important}
+#busy{position:fixed;inset:0;background:rgba(255,255,255,.6);display:none;z-index:8;align-items:center;justify-content:center;font-weight:700}
+@media print{nav.tabs,header.top button,.noprint{display:none!important}body{background:#fff}.card{border:0;padding:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top"><h1>RASG-2 তদারকি ও মূল্যায়ন<small id="who">পাইলট প্রকল্প</small></h1><button id="logout" class="hide">লগআউট</button></header>
+
+  <section id="v-login" class="card">
+    <h2>লগইন</h2>
+    <label class="f">আপনার নাম</label><select id="lg-name"><option>লোড হচ্ছে…</option></select>
+    <label class="f">PIN</label><input id="lg-pin" type="password" inputmode="numeric" autocomplete="off">
+    <button class="btn" id="lg-go">প্রবেশ করুন</button>
+  </section>
+
+  <section id="v-student" class="hide"></section>
+
+  <section id="v-plan" class="hide">
+    <div class="card">
+      <h2>সুপারভাইজারের দৈনিক রুটিন</h2>
+      <label class="f">তারিখ</label><input type="date" id="pl-date">
+      <div id="pl-body" style="margin-top:8px"></div>
+      <button class="btn ghost noprint" onclick="window.print()">এই দিনের রুটিন প্রিন্ট</button>
+    </div>
+    <div class="card"><h2>পরের ৭ দিন</h2><div id="pl-week" class="list"></div></div>
+  </section>
+
+  <section id="v-worker" class="hide">
+    <div class="card">
+      <h2>কর্মীর কাজের মূল্যায়ন</h2>
+      <label class="f">কর্মী</label><select id="wk-sel"></select>
+      <div class="muted" id="wk-role"></div>
+      <div class="row2">
+        <div><label class="f">তারিখ হতে</label><input type="date" id="wk-from"></div>
+        <div><label class="f">তারিখ পর্যন্ত</label><input type="date" id="wk-to"></div>
+      </div>
+      <div class="chips" style="margin-top:8px">
+        <button class="chip" data-rng="0">আজ</button><button class="chip" data-rng="1">গতকাল</button><button class="chip" data-rng="3">গত ৩ দিন</button><button class="chip" data-rng="7">গত ৭ দিন</button>
+      </div>
+      <h3>বিষয়ভিত্তিক স্কোর <span class="muted">(১ = খুব খারাপ, ৫ = খুব ভালো; প্রযোজ্য না হলে খালি রাখুন)</span></h3>
+      <div id="wk-crit"></div>
+      <label class="f">মন্তব্য (ঐচ্ছিক)</label><textarea id="wk-cmt" placeholder="যা দেখেছেন সংক্ষেপে লিখুন"></textarea>
+      <button class="btn" id="wk-save">মূল্যায়ন জমা দিন</button>
+    </div>
+    <div class="card"><h2>এই কর্মীর সর্বশেষ মূল্যায়ন</h2><div id="wk-hist" class="list muted">কর্মী বাছাই করুন</div></div>
+  </section>
+
+  <section id="v-room" class="hide">
+    <div class="card">
+      <h2>কক্ষের পরিচ্ছন্নতা মূল্যায়ন</h2>
+      <p class="muted" style="margin:0">পরিষ্কারের নির্ধারিত সময়ের পর ২৪ ঘণ্টা পর্যন্ত মূল্যায়ন দেওয়া যায়।</p>
+      <label class="f">তলা</label><select id="rm-floor"></select>
+      <div id="rm-list"></div>
+    </div>
+    <div class="card hide" id="rm-form">
+      <h2 id="rm-title"></h2><div class="muted" id="rm-sub"></div>
+      <label class="f">অবস্থা</label>
+      <div class="chips" id="rm-status"></div>
+      <div id="rm-crit"></div>
+      <label class="f">মন্তব্য (ঐচ্ছিক)</label><textarea id="rm-cmt"></textarea>
+      <button class="btn" id="rm-save">মূল্যায়ন জমা দিন</button>
+      <button class="btn ghost" id="rm-cancel">বাতিল</button>
+    </div>
+  </section>
+
+  <section id="v-issue" class="hide">
+    <div class="card">
+      <h2>নতুন সমস্যা নথিভুক্ত করুন</h2>
+      <div class="row2">
+        <div><label class="f">হল</label><select id="is-hall"></select></div>
+        <div><label class="f">গুরুত্ব</label><select id="is-pri"></select></div>
+      </div>
+      <label class="f">ধরন</label><select id="is-cat"></select>
+      <label class="f">স্থান (তলা / কক্ষ / এলাকা)</label><input type="text" id="is-place">
+      <label class="f">বিবরণ</label><textarea id="is-desc"></textarea>
+      <label class="f">দায়িত্বপ্রাপ্ত (ঐচ্ছিক)</label><input type="text" id="is-owner">
+      <button class="btn" id="is-save">নথিভুক্ত করুন</button>
+    </div>
+    <div class="card">
+      <h2>সমস্যার তালিকা</h2>
+      <div class="chips" id="is-filter"></div>
+      <div id="is-list" class="list"></div>
+    </div>
+  </section>
+
+  <section id="v-dash" class="hide">
+    <div class="card">
+      <h2>ড্যাশবোর্ড</h2>
+      <div class="row2">
+        <div><label class="f">তারিখ হতে</label><input type="date" id="d-from"></div>
+        <div><label class="f">তারিখ পর্যন্ত</label><input type="date" id="d-to"></div>
+      </div>
+      <div class="row2">
+        <div><label class="f">ধরন</label><select id="d-type"><option value="">সব</option><option value="WORKER">কর্মী মূল্যায়ন</option><option value="ROOM">কক্ষ মূল্যায়ন</option><option value="STUDENT">ছাত্রীদের মূল্যায়ন</option></select></div>
+        <div><label class="f">মূল্যায়ন</label><select id="d-sent"><option value="">সব</option><option value="POSITIVE">ইতিবাচক</option><option value="AVERAGE">মাঝারি</option><option value="NEGATIVE">নেতিবাচক</option></select></div>
+      </div>
+      <div class="row2">
+        <div><label class="f">তলা / এলাকা</label><select id="d-floor"></select></div>
+        <div><label class="f">কর্মী</label><select id="d-worker"></select></div>
+      </div>
+      <label class="f">মূল্যায়নকারী</label><select id="d-by"></select>
+      <button class="btn ghost" id="d-reload">তথ্য নতুন করে আনুন</button>
+    </div>
+    <div class="card"><div class="kpis" id="d-kpi"></div></div>
+    <div class="card"><h2>তলা অনুযায়ী</h2><div id="d-floors"></div></div>
+    <div class="card"><h2>কর্মী অনুযায়ী</h2><div id="d-workers"></div></div>
+    <div class="card"><h2>দৈনিক প্রবণতা</h2><div id="d-trend"></div></div>
+    <div class="card"><h2>নজর দেওয়া দরকার (নেতিবাচক)</h2><div id="d-neg" class="list"></div></div>
+    <div class="card"><h2>সমস্যা নিবন্ধনের সারাংশ</h2><div id="d-issues"></div></div>
+    <div class="card"><h2>সব মূল্যায়ন (ফিল্টার অনুযায়ী)</h2><div style="overflow-x:auto"><table class="t" id="d-table"></table></div></div>
+  </section>
+</div>
+
+<nav class="tabs hide" id="tabs">
+  <button data-v="plan"><b>🗓</b>রুটিন</button>
+  <button data-v="worker"><b>👤</b>কর্মী</button>
+  <button data-v="room"><b>🚪</b>কক্ষ</button>
+  <button data-v="issue"><b>⚠</b>সমস্যা</button>
+  <button data-v="dash"><b>📊</b>ড্যাশবোর্ড</button>
+</nav>
+<div id="toast"></div><div id="busy">অপেক্ষা করুন…</div>
+
+<script>
+var ROOM_PARAM = <?!= JSON.stringify(room) ?>;
+var S = { auth: null, boot: null, view: 'plan', wScores: {}, rScores: {}, rSel: null, rStatus: 'পরিষ্কার হয়েছে', dash: null, issues: [], isFilter: '' };
+var $ = function (id) { return document.getElementById(id); };
+var WHO0 = $('who') ? $('who').textContent : '';
+var SENT_BN = { POSITIVE: 'ইতিবাচক', AVERAGE: 'মাঝারি', NEGATIVE: 'নেতিবাচক' };
+var LIK = ['খুব খারাপ', 'খারাপ', 'মোটামুটি', 'ভালো', 'খুব ভালো'];
+function bn(v) { return String(v).replace(/[0-9]/g, function (d) { return '০১২৩৪৫৬৭৮৯'[d]; }); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function toast(msg, err) { var t = $('toast'); t.textContent = msg; t.className = err ? 'err' : ''; t.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(function () { t.style.display = 'none'; }, err ? 5000 : 2800); }
+function call(fn, args, ok) {
+  $('busy').style.display = 'flex';
+  var r = google.script.run.withSuccessHandler(function (res) { $('busy').style.display = 'none'; ok(res); })
+    .withFailureHandler(function (e) { $('busy').style.display = 'none'; toast((e && e.message || e || 'ত্রুটি').replace(/^Error:\s*/, ''), true); });
+  r[fn].apply(r, args);
+}
+function opts(el, list, first) { el.innerHTML = (first != null ? '<option value="">' + esc(first) + '</option>' : '') + list.map(function (o) { return '<option value="' + esc(o.v != null ? o.v : o) + '">' + esc(o.t != null ? o.t : o) + '</option>'; }).join(''); }
+function addDays(iso, n) { var d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+function dBn(iso) { return iso ? bn(iso.slice(8, 10) + '-' + iso.slice(5, 7) + '-' + iso.slice(0, 4)) : ''; }
+
+/* ---- লগইন ---- */
+function init() {
+  if (ROOM_PARAM) return studentInit();
+  var saved = null; try { saved = JSON.parse(sessionStorage.getItem('sv_auth') || 'null'); } catch (e) {}
+  call('apiReviewerNames', [], function (names) {
+    opts($('lg-name'), names);
+    if (saved) { $('lg-name').value = saved.name; $('lg-pin').value = saved.pin; login(); }
+  });
+}
+function login() {
+  var a = { name: $('lg-name').value, pin: $('lg-pin').value.trim() };
+  call('apiLogin', [a.name, a.pin], function (boot) {
+    S.auth = a; S.boot = boot; try { sessionStorage.setItem('sv_auth', JSON.stringify(a)); } catch (e) {}
+    $('v-login').classList.add('hide'); $('tabs').classList.remove('hide'); $('logout').classList.remove('hide');
+    $('who').textContent = boot.user.name + ' • ' + dBn(boot.today);
+    setupForms(); applyRole(boot.user.role);
+  });
+}
+$('lg-go').onclick = login;
+$('lg-pin').onkeydown = function (e) { if (e.key === 'Enter') login(); };
+$('logout').onclick = function () {
+  // Apps Script-এর ফ্রেমে পেজ রিলোড করলে ফাঁকা হয়ে যায়, তাই এখানেই লগইন পর্দায় ফেরানো হয়
+  try { sessionStorage.removeItem('sv_auth'); } catch (e) {}
+  S.auth = null; S.boot = null; S.dash = null; S.wScores = {}; S.rScores = {}; S.rSel = null; S.issues = [];
+  ['plan', 'worker', 'room', 'issue', 'dash'].forEach(function (k) { $('v-' + k).classList.add('hide'); });
+  $('tabs').classList.add('hide'); $('logout').classList.add('hide'); $('v-login').classList.remove('hide');
+  $('lg-pin').value = ''; $('who').textContent = WHO0; window.scrollTo(0, 0);
+};
+[].forEach.call(document.querySelectorAll('#tabs button'), function (b) { b.onclick = function () { show(b.dataset.v); }; });
+// ভূমিকা অনুযায়ী ট্যাব: সুপারভাইজার রুটিন দিয়ে শুরু; অফিসার কক্ষ মূল্যায়ন দিয়ে; অ্যাডমিন ড্যাশবোর্ড দিয়ে।
+var ROLE_TABS = {
+  SUPERVISOR: { tabs: ['plan', 'worker', 'room', 'issue', 'dash'], home: 'plan' },
+  OFFICER: { tabs: ['room', 'issue', 'dash', 'plan'], home: 'room' },
+  ADMIN: { tabs: ['dash', 'issue', 'worker', 'room', 'plan'], home: 'dash' }
+};
+function applyRole(role) {
+  var r = ROLE_TABS[role] || ROLE_TABS.SUPERVISOR, nav = $('tabs');
+  r.tabs.forEach(function (v) { var b = nav.querySelector('[data-v="' + v + '"]'); if (b) nav.appendChild(b); });
+  [].forEach.call(nav.querySelectorAll('button'), function (b) { b.classList.toggle('hide', r.tabs.indexOf(b.dataset.v) < 0); });
+  var sv = role === 'SUPERVISOR', pb = nav.querySelector('[data-v="plan"]');
+  if (pb) pb.innerHTML = sv ? '<b>🗓</b>রুটিন' : '<b>🗓</b>সুপারভাইজার';
+  var h = document.querySelector('#v-plan h2');
+  if (h) h.textContent = sv ? 'সুপারভাইজারের দৈনিক রুটিন' : 'সুপারভাইজারের রুটিন (তদারকির জন্য)';
+  show(r.home);
+}
+function show(v) {
+  S.view = v;
+  ['plan', 'worker', 'room', 'issue', 'dash'].forEach(function (k) { $('v-' + k).classList.toggle('hide', k !== v); });
+  [].forEach.call(document.querySelectorAll('#tabs button'), function (b) { b.classList.toggle('on', b.dataset.v === v); });
+  window.scrollTo(0, 0);
+  if (v === 'plan') loadPlan();
+  if (v === 'room') loadRooms();
+  if (v === 'issue') loadIssues();
+  if (v === 'dash' && !S.dash) loadDash();
+}
+function setupForms() {
+  var b = S.boot;
+  $('pl-date').value = b.today; $('pl-date').onchange = loadPlan;
+  opts($('wk-sel'), b.staff.map(function (s) { return { v: s.sl, t: s.nameBn + ' — ' + s.roleBn }; }), 'কর্মী বাছাই করুন');
+  $('wk-from').value = b.today; $('wk-to').value = b.today; $('wk-from').max = b.today; $('wk-to').max = b.today;
+  $('wk-sel').onchange = workerChanged;
+  [].forEach.call(document.querySelectorAll('[data-rng]'), function (c) {
+    c.onclick = function () { var n = Number(c.dataset.rng); $('wk-to').value = n === 1 ? addDays(b.today, -1) : b.today; $('wk-from').value = n === 0 ? b.today : n === 1 ? addDays(b.today, -1) : addDays(b.today, -(n - 1)); };
+  });
+  opts($('rm-floor'), b.floors.map(function (f) { return { v: f.key, t: f.label }; }));
+  $('rm-floor').onchange = loadRooms;
+  opts($('is-hall'), b.halls); opts($('is-pri'), b.issue.priorities); $('is-pri').value = 'সাধারণ'; opts($('is-cat'), b.issue.categories);
+  $('d-from').value = addDays(b.today, -29); $('d-to').value = b.today;
+  ['d-from', 'd-to', 'd-type', 'd-sent', 'd-floor', 'd-worker', 'd-by'].forEach(function (id) { $(id).onchange = renderDash; });
+  $('d-reload').onclick = loadDash;
+}
+function likertHtml(key, cur) { return '<div class="likert" data-k="' + esc(key) + '">' + [1, 2, 3, 4, 5].map(function (n) { return '<button type="button" data-n="' + n + '" class="' + (cur === n ? 'on' : '') + '">' + bn(n) + '<small>' + LIK[n - 1] + '</small></button>'; }).join('') + '</div>'; }
+function bindLikert(root, store) {
+  [].forEach.call(root.querySelectorAll('.likert button'), function (btn) {
+    btn.onclick = function () {
+      var k = btn.parentNode.dataset.k, n = Number(btn.dataset.n);
+      store[k] = store[k] === n ? null : n;
+      [].forEach.call(btn.parentNode.children, function (x) { x.classList.toggle('on', Number(x.dataset.n) === store[k]); });
+    };
+  });
+}
+function critHtml(list, store) { return list.map(function (c) { return '<div class="crit"><div class="t">' + esc(c.label) + '</div>' + likertHtml(c.key, store[c.key]) + '</div>'; }).join(''); }
+
+/* ---- রুটিন ---- */
+function loadPlan() {
+  call('apiPlan', [S.auth, $('pl-date').value], function (res) {
+    var p = res.plan, h = '<div class="muted">' + esc(p.dateBn) + ' • ' + esc(p.dayBn) + '</div>';
+    if (p.off) h += '<p><b>সাপ্তাহিক ছুটি</b></p>';
+    else {
+      h += p.slots.map(function (s) {
+        var inner = '';
+        if (s.hall === 'RASG-2' && s.type === 'work') inner = '<div class="inner"><div class="muted">পরিদর্শন দল-' + esc(p.r2.group) + ' • প্রতিটি তলায় করিডোর, ওয়াশরুম ও গত ২৪ ঘণ্টায় পরিষ্কার হওয়া কক্ষ দেখে অ্যাপে মূল্যায়ন দিন</div>' + p.r2.inner.map(function (x) { return '<div><b>' + esc(x.time) + '</b> ' + esc(x.label) + '</div>'; }).join('') + '</div>';
+        return '<div class="slot ' + s.type + (s.hall === 'RASG-2' ? ' r2' : '') + '"><div class="tm">' + esc(s.time) + '<small>' + bn(s.mins) + ' মিনিট</small></div><div><div class="lb">' + esc(s.label) + '</div>' + inner + '</div></div>';
+      }).join('');
+    }
+    $('pl-body').innerHTML = h;
+    $('pl-week').innerHTML = res.week.map(function (d) { return '<div class="it"><b>' + dBn(d.date) + ' ' + esc(d.dayBn) + '</b><br><span class="muted">' + (d.off ? 'সাপ্তাহিক ছুটি' : 'RASG-2: ' + esc(d.r2) + ' • ' + esc(d.halls)) + '</span></div>'; }).join('');
+  });
+}
+
+/* ---- কর্মী মূল্যায়ন ---- */
+function curWorker() { var sl = $('wk-sel').value; return S.boot.staff.filter(function (s) { return s.sl === sl; })[0]; }
+function workerChanged() {
+  var w = curWorker(); S.wScores = {};
+  if (!w) { $('wk-crit').innerHTML = ''; $('wk-role').textContent = ''; return; }
+  $('wk-role').textContent = 'আইডি: ' + w.id + ' • সাপ্তাহিক ছুটি: ' + w.offEn;
+  $('wk-crit').innerHTML = critHtml(S.boot.criteria[w.group] || [], S.wScores); bindLikert($('wk-crit'), S.wScores);
+  call('apiWorkerHistory', [S.auth, w.sl], function (rows) {
+    $('wk-hist').innerHTML = rows.length ? rows.map(function (r) { return '<div class="it"><span class="tag ' + r.s + '">' + SENT_BN[r.s] + ' • ' + bn(r.avg) + '</span> <span class="muted">' + dBn(r.from) + (r.to !== r.from ? ' – ' + dBn(r.to) : '') + ' • ' + esc(r.by) + '</span>' + (r.comment ? '<div>' + esc(r.comment) + '</div>' : '') + '</div>'; }).join('') : 'এখনও কোনো মূল্যায়ন নেই';
+  });
+}
+$('wk-save').onclick = function () {
+  var w = curWorker(); if (!w) return toast('কর্মী বাছাই করুন', true);
+  call('apiSubmitWorker', [S.auth, { sl: w.sl, from: $('wk-from').value, to: $('wk-to').value, scores: S.wScores, comment: $('wk-cmt').value }], function (r) {
+    toast('জমা হয়েছে • গড় ' + bn(r.avg) + ' • ' + SENT_BN[r.sentiment]); $('wk-cmt').value = ''; S.dash = null; workerChanged();
+  });
+};
+
+/* ---- কক্ষ মূল্যায়ন ---- */
+function loadRooms() {
+  $('rm-form').classList.add('hide');
+  call('apiRoomsOpen', [S.auth, $('rm-floor').value], function (rows) {
+    S.rooms = rows;
+    $('rm-list').innerHTML = rows.length ? rows.map(function (o, i) {
+      return '<button class="room ' + (o.done ? 'done' : '') + '" data-i="' + i + '"><span><b>' + (o.type === 'STAR' ? '★ ' : '') + esc(o.room) + '</b><br><span class="muted">' + dBn(o.date) + ' • ' + esc(o.worker) + '</span></span><span class="muted" style="text-align:right">' + (o.done ? 'দেওয়া হয়েছে ✓' : 'বাকি ' + esc(o.closesBn)) + '</span></button>';
+    }).join('') : '<p class="muted">এই তলায় এখন মূল্যায়নের জন্য কোনো কক্ষ খোলা নেই।</p>';
+    [].forEach.call($('rm-list').querySelectorAll('.room'), function (b) { b.onclick = function () { openRoom(S.rooms[Number(b.dataset.i)]); }; });
+  });
+}
+function roomCrit(o) { var c = S.boot.criteria; return (c.ROOM || []).concat(o.type === 'STAR' ? (c.ROOM_STAR || []) : []); }
+function openRoom(o) {
+  S.rSel = o; S.rScores = {}; S.rStatus = 'পরিষ্কার হয়েছে';
+  $('rm-title').textContent = (o.type === 'STAR' ? '★ ' : '') + 'কক্ষ ' + o.room;
+  $('rm-sub').textContent = dBn(o.date) + ' • ' + (o.type === 'STAR' ? 'ফ্যান ও জানালাসহ পরিষ্কার' : 'ঝাড়ু ও মোছা') + ' • কর্মী: ' + o.worker;
+  $('rm-status').innerHTML = ['পরিষ্কার হয়েছে', 'ছাত্রী অনুপস্থিত থাকায় হয়নি', 'কর্মী পরিষ্কার করেননি'].map(function (s) { return '<button type="button" class="chip ' + (s === S.rStatus ? 'on' : '') + '">' + s + '</button>'; }).join('');
+  [].forEach.call($('rm-status').children, function (c) { c.onclick = function () { S.rStatus = c.textContent; [].forEach.call($('rm-status').children, function (x) { x.classList.toggle('on', x === c); }); $('rm-crit').classList.toggle('hide', S.rStatus !== 'পরিষ্কার হয়েছে'); }; });
+  $('rm-crit').classList.remove('hide'); $('rm-crit').innerHTML = critHtml(roomCrit(o), S.rScores); bindLikert($('rm-crit'), S.rScores);
+  $('rm-cmt').value = ''; $('rm-form').classList.remove('hide'); $('rm-form').scrollIntoView({ behavior: 'smooth' });
+}
+$('rm-cancel').onclick = function () { $('rm-form').classList.add('hide'); };
+$('rm-save').onclick = function () {
+  var o = S.rSel;
+  call('apiSubmitRoom', [S.auth, { floor: o.floor, room: o.room, date: o.date, type: o.type, status: S.rStatus, scores: S.rScores, comment: $('rm-cmt').value }], function (r) {
+    toast('জমা হয়েছে • ' + SENT_BN[r.sentiment]); S.dash = null; loadRooms();
+  });
+};
+
+/* ---- সমস্যা নিবন্ধন ---- */
+function loadIssues() { call('apiIssues', [S.auth], function (rows) { S.issues = rows; renderIssues(); }); }
+function renderIssues() {
+  var st = [''].concat(S.boot.issue.statuses);
+  $('is-filter').innerHTML = st.map(function (s) { var n = S.issues.filter(function (i) { return !s || i.status === s; }).length; return '<button class="chip ' + (S.isFilter === s ? 'on' : '') + '" data-s="' + s + '">' + (s || 'সব') + ' (' + bn(n) + ')</button>'; }).join('');
+  [].forEach.call($('is-filter').children, function (c) { c.onclick = function () { S.isFilter = c.dataset.s; renderIssues(); }; });
+  var list = S.issues.filter(function (i) { return !S.isFilter || i.status === S.isFilter; });
+  $('is-list').innerHTML = list.length ? list.map(function (i) {
+    return '<div class="it"><b>' + esc(i.id) + '</b> <span class="tag ' + (i.status === 'সমাধান হয়েছে' ? 'POSITIVE' : i.pri === 'জরুরি' ? 'NEGATIVE' : 'AVERAGE') + '">' + esc(i.status) + ' • ' + esc(i.pri) + '</span><div>' + esc(i.desc) + '</div><div class="muted">' + esc(i.hall) + (i.place ? ' • ' + esc(i.place) : '') + ' • ' + esc(i.cat) + ' • ' + esc(i.by) + ' • ' + esc(i.at) + '</div>' + (i.fix ? '<div class="muted">ব্যবস্থা: ' + esc(i.fix) + '</div>' : '') +
+      '<details><summary class="muted">হালনাগাদ করুন</summary><label class="f">অবস্থা</label><select data-f="status">' + S.boot.issue.statuses.map(function (s) { return '<option' + (s === i.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select><label class="f">দায়িত্বপ্রাপ্ত</label><input type="text" data-f="owner" value="' + esc(i.owner) + '"><label class="f">সমাধান / গৃহীত ব্যবস্থা</label><textarea data-f="fix">' + esc(i.fix) + '</textarea><button class="btn ghost" data-id="' + esc(i.id) + '">সংরক্ষণ</button></details></div>';
+  }).join('') : '<p class="muted">কোনো সমস্যা নেই।</p>';
+  [].forEach.call($('is-list').querySelectorAll('button[data-id]'), function (b) {
+    b.onclick = function () { var d = b.parentNode, q = function (f) { return d.querySelector('[data-f=' + f + ']').value; }; call('apiIssueSave', [S.auth, { id: b.dataset.id, status: q('status'), owner: q('owner'), fix: q('fix') }], function () { toast('হালনাগাদ হয়েছে'); S.dash = null; loadIssues(); }); };
+  });
+}
+$('is-save').onclick = function () {
+  call('apiIssueSave', [S.auth, { hall: $('is-hall').value, pri: $('is-pri').value, cat: $('is-cat').value, place: $('is-place').value, desc: $('is-desc').value, owner: $('is-owner').value }], function (r) {
+    toast('নথিভুক্ত হয়েছে: ' + r.id); $('is-desc').value = ''; $('is-place').value = ''; $('is-owner').value = ''; S.dash = null; loadIssues();
+  });
+};
+
+/* ---- ড্যাশবোর্ড ---- */
+function loadDash() {
+  call('apiDashboard', [S.auth], function (d) {
+    S.dash = d;
+    var uniq = function (k) { var m = {}; d.feedback.forEach(function (r) { if (r[k]) m[r[k]] = 1; }); return Object.keys(m).sort(); };
+    opts($('d-floor'), uniq('floor'), 'সব'); opts($('d-worker'), uniq('worker'), 'সব'); opts($('d-by'), uniq('by'), 'সব');
+    renderDash();
+  });
+}
+function group(rows, key) {
+  var m = {}; rows.forEach(function (r) { var k = r[key] || '—'; var g = m[k] = m[k] || { k: k, n: 0, sum: 0, sc: 0, P: 0, A: 0, N: 0 }; g.n++; if (r.avg) { g.sum += r.avg; g.sc++; } g[r.s === 'POSITIVE' ? 'P' : r.s === 'NEGATIVE' ? 'N' : 'A']++; });
+  return Object.keys(m).map(function (k) { var g = m[k]; g.avg = g.sc ? Math.round(g.sum / g.sc * 100) / 100 : 0; return g; });
+}
+function bars(list) {
+  return list.length ? list.map(function (g) { var w = function (x) { return (x / g.n * 100).toFixed(1) + '%'; }; return '<div class="bar"><span>' + esc(g.k) + ' <span class="muted">(' + bn(g.n) + ')</span></span><span class="tr"><i class="p" style="width:' + w(g.P) + '"></i><i class="a" style="width:' + w(g.A) + '"></i><i class="n" style="width:' + w(g.N) + '"></i></span><b>' + (g.avg ? bn(g.avg.toFixed(1)) : '—') + '</b></div>'; }).join('') + '<div class="muted" style="margin-top:6px">সবুজ = ইতিবাচক • হলুদ = মাঝারি • লাল = নেতিবাচক • ডানে গড় স্কোর (৫-এ)</div>' : '<p class="muted">কোনো তথ্য নেই</p>';
+}
+function renderDash() {
+  var d = S.dash; if (!d) return;
+  var f = { from: $('d-from').value, to: $('d-to').value, type: $('d-type').value, s: $('d-sent').value, floor: $('d-floor').value, worker: $('d-worker').value, by: $('d-by').value };
+  var rows = d.feedback.filter(function (r) { var day = String(r.ts).slice(0, 10); return (!f.from || day >= f.from) && (!f.to || day <= f.to) && (!f.type || r.type === f.type) && (!f.s || r.s === f.s) && (!f.floor || r.floor === f.floor) && (!f.worker || r.worker === f.worker) && (!f.by || r.by === f.by); });
+  var c = { P: 0, A: 0, N: 0 }, sum = 0, sc = 0;
+  rows.forEach(function (r) { c[r.s === 'POSITIVE' ? 'P' : r.s === 'NEGATIVE' ? 'N' : 'A']++; if (r.avg) { sum += r.avg; sc++; } });
+  $('d-kpi').innerHTML = '<div class="kpi"><b>' + bn(rows.length) + '</b><span>মোট মূল্যায়ন</span></div><div class="kpi POSITIVE"><b>' + bn(c.P) + '</b><span>ইতিবাচক</span></div><div class="kpi AVERAGE"><b>' + bn(c.A) + '</b><span>মাঝারি</span></div><div class="kpi NEGATIVE"><b>' + bn(c.N) + '</b><span>নেতিবাচক</span></div>' +
+    '<div class="kpi" style="grid-column:span 4"><b>' + (sc ? bn((sum / sc).toFixed(2)) : '—') + ' / ৫</b><span>গড় স্কোর</span></div>';
+  $('d-floors').innerHTML = bars(group(rows, 'floor').sort(function (a, b) { return a.avg - b.avg; }));
+  $('d-workers').innerHTML = bars(group(rows, 'worker').sort(function (a, b) { return a.avg - b.avg; }));
+  var days = {}; rows.forEach(function (r) { r.day = String(r.ts).slice(0, 10); });
+  $('d-trend').innerHTML = bars(group(rows, 'day').sort(function (a, b) { return a.k < b.k ? 1 : -1; }).slice(0, 14).map(function (g) { g.k = dBn(g.k); return g; }));
+  var neg = rows.filter(function (r) { return r.s === 'NEGATIVE'; }).slice(-15).reverse();
+  $('d-neg').innerHTML = neg.length ? neg.map(function (r) { return '<div class="it"><b>' + esc(r.floor) + (r.room ? ' • কক্ষ ' + esc(r.room) : '') + '</b> <span class="tag NEGATIVE">' + (r.avg ? bn(r.avg) : 'নেতিবাচক') + '</span><div>' + esc(r.worker) + '</div><div class="muted">' + esc(r.why) + (r.comment ? ' • “' + esc(r.comment) + '”' : '') + ' • ' + esc(r.by) + ' • ' + dBn(String(r.ts).slice(0, 10)) + '</div></div>'; }).join('') : '<p class="muted">এই ফিল্টারে কোনো নেতিবাচক মূল্যায়ন নেই।</p>';
+  var is = d.issues, by = function (k) { var m = {}; is.forEach(function (i) { m[i[k]] = (m[i[k]] || 0) + 1; }); return Object.keys(m).map(function (k2) { return esc(k2) + ': <b>' + bn(m[k2]) + '</b>'; }).join(' • '); };
+  $('d-issues').innerHTML = is.length ? '<p>মোট <b>' + bn(is.length) + '</b>টি • ' + by('status') + '</p><p class="muted">ধরন: ' + by('cat') + '</p><p class="muted">গুরুত্ব: ' + by('pri') + '</p>' : '<p class="muted">কোনো সমস্যা নথিভুক্ত হয়নি।</p>';
+  $('d-table').innerHTML = '<tr><th>তারিখ</th><th>ধরন</th><th>তলা/কক্ষ</th><th>কর্মী</th><th>স্কোর</th><th>মূল্যায়ন</th><th>মন্তব্য</th></tr>' + rows.slice(-200).reverse().map(function (r) { return '<tr><td>' + dBn(String(r.ts).slice(0, 10)) + '</td><td>' + ({ WORKER: 'কর্মী', ROOM: 'কক্ষ', STUDENT: 'ছাত্রী' }[r.type] || r.type) + '</td><td>' + esc(r.floor) + (r.room ? '<br>' + esc(r.room) : '') + '</td><td>' + esc(r.worker) + '</td><td>' + (r.avg ? bn(r.avg) : '—') + '</td><td><span class="tag ' + r.s + '">' + (SENT_BN[r.s] || r.s) + '</span></td><td>' + esc(r.comment) + '</td></tr>'; }).join('');
+}
+
+/* ---- ছাত্রীদের মূল্যায়ন (পাইলট শেষে চালু হবে) ---- */
+function studentInit() {
+  $('v-login').classList.add('hide'); var box = $('v-student'); box.classList.remove('hide');
+  call('apiStudentRoom', [ROOM_PARAM], function (res) {
+    if (!res.open) { box.innerHTML = '<div class="card"><h2>কক্ষ ' + esc(ROOM_PARAM) + '</h2><p>ছাত্রীদের মূল্যায়ন এখনও চালু হয়নি। পাইলট প্রকল্প শেষে চালু করা হবে।</p></div>'; return; }
+    if (!res.rooms.length) { box.innerHTML = '<div class="card"><h2>কক্ষ ' + esc(ROOM_PARAM) + '</h2><p>গত ২৪ ঘণ্টায় এই কক্ষ পরিষ্কারের সূচিতে ছিল না, তাই এখন মূল্যায়ন দেওয়া যাবে না।</p></div>'; return; }
+    var o = res.rooms[0], sc = {}, crit = (res.criteria.ROOM || []).concat(o.type === 'STAR' ? (res.criteria.ROOM_STAR || []) : []);
+    box.innerHTML = '<div class="card"><h2>কক্ষ ' + esc(o.room) + ' — পরিচ্ছন্নতা মূল্যায়ন</h2><div class="muted">' + dBn(o.date) + '</div><div id="st-crit">' + critHtml(crit, sc) + '</div><label class="f">মন্তব্য (ঐচ্ছিক)</label><textarea id="st-cmt"></textarea><button class="btn" id="st-save">জমা দিন</button></div>';
+    bindLikert($('st-crit'), sc);
+    $('st-save').onclick = function () { call('apiStudentSubmit', [{ floor: o.floor, room: o.room, date: o.date, type: o.type, status: 'পরিষ্কার হয়েছে', scores: sc, comment: $('st-cmt').value }], function () { box.innerHTML = '<div class="card"><h2>ধন্যবাদ</h2><p>আপনার মূল্যায়ন জমা হয়েছে।</p></div>'; }); };
+  });
+}
+init();
+</script>
+</body>
+</html>
