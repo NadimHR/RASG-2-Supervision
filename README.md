@@ -1,2 +1,28 @@
-# RASG-2-Supervision
-RASG-2 supervisor routine, worker &amp; room reviews, isue register and dashboard (Google Apps Script)
+# RASG-2 তদারকি ও মূল্যায়ন (পাইলট)
+
+ছাত্রী হল RASG-2-এর সুপারভাইজারের দৈনিক রুটিন, কর্মী মূল্যায়ন, কক্ষের পরিচ্ছন্নতা মূল্যায়ন, সমস্যা রেজিস্টার ও ড্যাশবোর্ড।
+
+**অ্যাপ:** https://nadimhr.github.io/RASG-2-Supervision/
+
+## কীভাবে চলে
+- আসল অ্যাপটি Google Apps Script ওয়েব অ্যাপ (`apps-script/`), Google Sheet ডেটাবেসের সাথে যুক্ত।
+- GitHub Pages-এর `index.html` লাইভ অ্যাপটিকে পুরো পর্দায় দেখায় (মোবাইল-বান্ধব)।
+- নতুন ডেটা শুধু `SV_` দিয়ে শুরু হওয়া ট্যাবে লেখা হয়; Master roster, কর্মীর রুটিন ও কক্ষ শিডিউলের ট্যাব শুধু পড়া হয়।
+
+## ট্যাব
+| ট্যাব | কাজ |
+|---|---|
+| SV_Config | সময়, বিরতি (১২:০০–০২:০০), হল, রিভিউ খোলা থাকার সময়, ছাত্রী রিভিউ চালু/বন্ধ |
+| SV_Reviewers | নাম, ভূমিকা, PIN |
+| SV_Criteria | দায়িত্ব অনুযায়ী মূল্যায়নের মানদণ্ড |
+| SV_Supervisor_Plan | সুপারভাইজারের দৈনিক রুটিন |
+| SV_Worker_Reviews / SV_Room_Reviews | মূল্যায়ন |
+| SV_Feedback_Master | সব মতামত, ইতিবাচক / মাঝারি / নেতিবাচক শ্রেণিবিভাগসহ |
+| SV_Issues | সমস্যা রেজিস্টার |
+
+## হালনাগাদের নিয়ম
+1. `apps-script/` ফাইল বদলান এবং Apps Script এডিটরে একই কোড বসান।
+2. Deploy → Manage deployments → Edit → New version → Deploy (লিংক একই থাকে)।
+3. নিয়ম বদলালে `writeSupervisorPlan` চালিয়ে রুটিন নতুন করে তৈরি করুন।
+
+> নিরাপত্তা: এই রিপোজিটরিতে PIN রাখা হয়নি (`0000`)। আসল PIN শুধু শিটের SV_Reviewers ট্যাবে।
