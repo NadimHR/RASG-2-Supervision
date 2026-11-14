@@ -22,7 +22,10 @@
   var url = APP + location.search;
   document.getElementById('app').src = url;
   document.getElementById('direct').href = url;
-  setTimeout(function () { document.getElementById('fb').style.display = 'block'; }, 8000);
+  // অ্যাপ লোড না হলে ১০ সেকেন্ড পর সরাসরি লিংক দেখাবে; লোড হলে কিছুই দেখাবে না
+  var loaded = false;
+  document.getElementById('app').onload = function () { loaded = true; document.getElementById('fb').style.display = 'none'; };
+  setTimeout(function () { if (!loaded) document.getElementById('fb').style.display = 'block'; }, 10000);
 </script>
 </body>
 </html>
